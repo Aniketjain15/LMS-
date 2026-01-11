@@ -10,7 +10,10 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserData } from '../redux/userSlice';
+import { useTranslation } from 'react-i18next';
+
 function Nav() {
+  const { t, i18n } = useTranslation();
   let [showHam,setShowHam] = useState(false)
   let [showPro,setShowPro] = useState(false)
   let navigate = useNavigate()
@@ -27,6 +30,11 @@ function Nav() {
       console.log(error.response.data.message)
     }
   }
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
+
   return (
     <div>
     <div className='w-[100%] h-[90px] fixed top-0 px-[20px] py-[10px] flex items-center justify-between bg-[#00000047]  z-10'>
@@ -35,8 +43,15 @@ function Nav() {
       
      </div>
      
-     <div className='w-[30%] lg:flex items-center justify-center gap-4 hidden'>
-
+     <div className='w-[40%] lg:flex items-center justify-center gap-4 hidden'>
+        <div className='w-[120px]'>
+          <select onChange={(e) => changeLanguage(e.target.value)} value={i18n.language} className='bg-black text-white p-2 rounded'>
+            <option value="en">English</option>
+            <option value="hi">हिन्दी</option>
+            <option value="mr">मराठी</option>
+            <option value="gu">ગુજરાતી</option>
+          </select>
+        </div>
         
         {!userData ? <IoMdPerson className='w-[50px] h-[50px] fill-white cursor-pointer border-[2px] border-[#fdfbfb] bg-[#000000d5] rounded-full p-[10px]'onClick={()=>setShowPro(prev=>!prev)}/>:
 
@@ -47,16 +62,16 @@ function Nav() {
          :
          <div className='w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[20px] border-2 bg-black  border-white cursor-pointer' >{userData?.name.slice(0,1).toUpperCase()}</div>}
           </div>}
-           {userData?.role == "educator" ? <div className='px-[20px] py-[10px] border-2 lg:border-white border-black lg:text-white bg-[black] text-black rounded-[10px] text-[18px] font-light flex gap-2 cursor-pointer' onClick={()=>navigate("/dashboard")}>Dashboard</div>
+           {userData?.role == "educator" ? <div className='px-[20px] py-[10px] border-2 lg:border-white border-black lg:text-white bg-[black] text-black rounded-[10px] text-[18px] font-light flex gap-2 cursor-pointer' onClick={()=>navigate("/dashboard")}>{t('dashboard')}</div>
            :""}
-        {!userData && <span className='px-[20px] py-[10px] border-2 border-white text-white rounded-[10px] text-[18px] font-light cursor-pointer bg-[#000000d5] ' onClick={()=>navigate("/login")}>Login</span>}
-        {userData && <span className='px-[20px] py-[10px] bg-white text-black rounded-[10px] shadow-sm shadow-black text-[18px] cursor-pointer' onClick={handleLogout}>LogOut</span>}
+        {!userData && <span className='px-[20px] py-[10px] border-2 border-white text-white rounded-[10px] text-[18px] font-light cursor-pointer bg-[#000000d5] ' onClick={()=>navigate("/login")}>{t('login')}</span>}
+        {userData && <span className='px-[20px] py-[10px] bg-white text-black rounded-[10px] shadow-sm shadow-black text-[18px] cursor-pointer' onClick={handleLogout}>{t('logout')}</span>}
        
 
      </div>
      {showPro && <div className=' absolute top-[110%] right-[15%] flex items-center flex-col justify-center gap-2 text-[16px] rounded-md bg-[white] px-[15px] py-[10px] border-[2px]  border-black hover:border-white hover:text-white cursor-pointer hover:bg-black  ' >
-      <span className='bg-[black] text-white  px-[30px] py-[10px] rounded-2xl hover:bg-gray-600' onClick={()=>navigate("/profile")}>My Profile</span>
-      <span className='bg-[black] text-white hover:bg-gray-600  px-[25px] py-[10px] rounded-2xl' onClick={()=>navigate("/enrolledcourses")}>My Courses</span>
+      <span className='bg-[black] text-white  px-[30px] py-[10px] rounded-2xl hover:bg-gray-600' onClick={()=>navigate("/profile")}>{t('my_profile')}</span>
+      <span className='bg-[black] text-white hover:bg-gray-600  px-[25px] py-[10px] rounded-2xl' onClick={()=>navigate("/enrolledcourses")}>{t('my_courses')}</span>
        </div>}
      <GiHamburgerMenu className='w-[30px] h-[30px] lg:hidden fill-white cursor-pointer ' onClick={()=>setShowHam(prev=>!prev)}/>
       
@@ -71,13 +86,13 @@ function Nav() {
          <div className='w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[20px] border-2 bg-black  border-white cursor-pointer' >{userData?.name.slice(0,1).toUpperCase()}</div>}</div>
       }
       
-      <span className='flex items-center justify-center gap-2  text-white border-[2px] border-[#fdfbfb7a] bg-[#000000d5] rounded-lg px-[65px] py-[20px] text-[18px] ' onClick={()=>navigate("/profile")}>My Profile </span>
-      <span className='flex items-center justify-center gap-2  text-white border-[2px] border-[#fdfbfb7a] bg-[#000000d5] rounded-lg px-[65px] py-[20px] text-[18px] ' onClick={()=>navigate("/enrolledcourses")}>My Courses </span>
+      <span className='flex items-center justify-center gap-2  text-white border-[2px] border-[#fdfbfb7a] bg-[#000000d5] rounded-lg px-[65px] py-[20px] text-[18px] ' onClick={()=>navigate("/profile")}>{t('my_profile')}</span>
+      <span className='flex items-center justify-center gap-2  text-white border-[2px] border-[#fdfbfb7a] bg-[#000000d5] rounded-lg px-[65px] py-[20px] text-[18px] ' onClick={()=>navigate("/enrolledcourses")}>{t('my_courses')}</span>
       
-      {userData?.role == "educator" ? <div className='flex items-center justify-center gap-2 text-[18px] text-white border-[2px] border-[#fdfbfb7a] bg-[#000000d5] rounded-lg px-[60px] py-[20px]' onClick={()=>navigate("/dashboard")}>Dashboard</div>
+      {userData?.role == "educator" ? <div className='flex items-center justify-center gap-2 text-[18px] text-white border-[2px] border-[#fdfbfb7a] bg-[#000000d5] rounded-lg px-[60px] py-[20px]' onClick={()=>navigate("/dashboard")}>{t('dashboard')}</div>
            :""}
-      {!userData ?<span className='flex items-center justify-center gap-2 text-[18px] text-white border-[2px] border-[#fdfbfb7a] bg-[#000000d5] rounded-lg px-[80px] py-[20px]' onClick={()=>navigate("/login")}>Login</span>:
-      <span className='flex items-center justify-center gap-2 text-[18px] text-white border-[2px] border-[#fdfbfb7a] bg-[#000000d5] rounded-lg px-[75px] py-[20px]' onClick={handleLogout}>LogOut</span>}
+      {!userData ?<span className='flex items-center justify-center gap-2 text-[18px] text-white border-[2px] border-[#fdfbfb7a] bg-[#000000d5] rounded-lg px-[80px] py-[20px]' onClick={()=>navigate("/login")}>{t('login')}</span>:
+      <span className='flex items-center justify-center gap-2 text-[18px] text-white border-[2px] border-[#fdfbfb7a] bg-[#000000d5] rounded-lg px-[75px] py-[20px]' onClick={handleLogout}>{t('logout')}</span>}
     
 
     </div>

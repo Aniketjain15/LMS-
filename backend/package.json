@@ -10,7 +10,10 @@
   "start": "node index.js",
   "dev": "nodemon index.js"
 },
+<<<<<<< HEAD
 
+=======
+>>>>>>> 43467a19253a3e3053890b81a4044dca78eaec76
   "dependencies": {
     "@google/genai": "^1.10.0",
     "bcryptjs": "^3.0.2",

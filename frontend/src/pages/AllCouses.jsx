@@ -5,12 +5,15 @@ import { useNavigate } from 'react-router-dom';
 import Nav from '../components/Nav';
 import ai from '../assets/SearchAi.png'
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+
 function AllCourses() {
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
   const navigate = useNavigate()
  const [category,setCategory] = useState([])
  const [filterCourses,setFilterCourses] = useState([])
   const {courseData} = useSelector(state=>state.course)
+  const { t } = useTranslation();
 
  
   
@@ -49,7 +52,7 @@ setFilterCourses(courseData)
         onClick={() => setIsSidebarVisible(prev => !prev)}
         className="fixed top-20 left-4 z-50 bg-white text-black px-3 py-1 rounded md:hidden border-2 border-black"
       >
-        {isSidebarVisible ? 'Hide' : 'Show'} Filters
+        {isSidebarVisible ? t('hide_filters') : t('show_filters')}
       </button>
 
       {/* Sidebar */}
@@ -57,46 +60,46 @@ setFilterCourses(courseData)
         ${isSidebarVisible ? 'translate-x-0' : '-translate-x-full'} 
         md:block md:translate-x-0`}>
           
-        <h2 className="text-xl font-bold flex items-center justify-center gap-2 text-gray-50 mb-6"><FaArrowLeftLong className='text-white' onClick={()=>navigate("/")}/>Filter by Category</h2>
+        <h2 className="text-xl font-bold flex items-center justify-center gap-2 text-gray-50 mb-6"><FaArrowLeftLong className='text-white' onClick={()=>navigate("/")}/>{t('filter_by_category')}</h2>
 
         <form className="space-y-4 text-sm  bg-gray-600 border-white text-[white] border  p-[20px] rounded-2xl" onSubmit={(e)=>e.preventDefault()}>
-          <button className='px-[10px] py-[10px]  bg-black text-white  rounded-[10px] text-[15px] font-light flex items-center justify-center gap-2 cursor-pointer' onClick={()=>navigate("/searchwithai")}>Search with AI <img src={ai} className='w-[30px] h-[30px] rounded-full' alt="" /></button>
+          <button className='px-[10px] py-[10px]  bg-black text-white  rounded-[10px] text-[15px] font-light flex items-center justify-center gap-2 cursor-pointer' onClick={()=>navigate("/searchwithai")}>{t('search_with_ai')} <img src={ai} className='w-[30px] h-[30px] rounded-full' alt="" /></button>
           <label  className="flex items-center gap-3 cursor-pointer hover:text-gray-200 transition">
               <input type="checkbox" className="accent-black w-4 h-4 rounded-md" value={'App Development'} onChange={toggleCategory}/>
-              App Development
+              {t('app_development')}
             </label>
           <label  className="flex items-center gap-3 cursor-pointer hover:text-gray-200 transition">
               <input type="checkbox" className="accent-black w-4 h-4 rounded-md" value={'AI/ML'} onChange={toggleCategory}/>
-              AI/ML
+              {t('ai_ml')}
             </label>
             
             <label  className="flex items-center gap-3 cursor-pointer hover:text-gray-200 transition">
               <input type="checkbox" className="accent-black w-4 h-4 rounded-md" value={'AI Tools'} onChange={toggleCategory} />
-              AI Tools
+              {t('ai_tools')}
             </label>
             <label  className="flex items-center gap-3 cursor-pointer hover:text-gray-200 transition">
               <input type="checkbox" className="accent-black w-4 h-4 rounded-md" value={'Data Science'} onChange={toggleCategory}/>
-              Data Science
+              {t('data_science')}
             </label>
             <label  className="flex items-center gap-3 cursor-pointer hover:text-gray-200 transition">
               <input type="checkbox" className="accent-black w-4 h-4 rounded-md" value={'Data Analytics'} onChange={toggleCategory} />
-              Data Analytics
+              {t('data_analytics')}
             </label>
             <label  className="flex items-center gap-3 cursor-pointer hover:text-gray-200 transition">
               <input type="checkbox" className="accent-black w-4 h-4 rounded-md" value={'Ethical Hacking'} onChange={toggleCategory}/>
-              Ethical Hacking
+              {t('ethical_hacking')}
             </label>
             <label  className="flex items-center gap-3 cursor-pointer hover:text-gray-200 transition">
               <input type="checkbox" className="accent-black w-4 h-4 rounded-md" value={'UI UX Designing'} onChange={toggleCategory}/>
-              UI UX Designing
+              {t('ui_ux_designing')}
             </label>
             <label  className="flex items-center gap-3 cursor-pointer hover:text-gray-200 transition">
               <input type="checkbox" className="accent-black w-4 h-4 rounded-md" value={'Web Development'} onChange={toggleCategory}/>
-              Web Development
+              {t('web_development')}
             </label>
             <label  className="flex items-center gap-3 cursor-pointer hover:text-gray-200 transition">
               <input type="checkbox" className="accent-black w-4 h-4 rounded-md" value={'Others'} onChange={toggleCategory} />
-              Others
+              {t('others')}
             </label>
         </form>
       </aside>

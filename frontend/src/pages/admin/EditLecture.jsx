@@ -7,12 +7,15 @@ import { serverUrl } from '../../App'
 import { setLectureData } from '../../redux/lectureSlice'
 import { toast } from 'react-toastify'
 import { ClipLoader } from 'react-spinners'
+import { useTranslation } from 'react-i18next'
+
 function EditLecture() {
     const [loading,setLoading]= useState(false)
     const [loading1,setLoading1]= useState(false)
     const {courseId , lectureId} = useParams()
     const {lectureData} = useSelector(state=>state.lecture)
     const dispatch = useDispatch()
+    const { t } = useTranslation();
     const selectedLecture = lectureData.find(lecture => lecture._id === lectureId)
     const [videoUrl,setVideoUrl] = useState(null)
     const [lectureTitle,setLectureTitle] = useState(selectedLecture.lectureTitle)
@@ -73,21 +76,21 @@ function EditLecture() {
         {/* Header Inside Box */}
         <div className="flex items-center gap-2 mb-2">
           <FaArrowLeft className="text-gray-600 cursor-pointer" onClick={()=>navigate(`/createlecture/${courseId}`)} />
-          <h2 className="text-xl font-semibold text-gray-800">Update Your Lecture</h2>
+          <h2 className="text-xl font-semibold text-gray-800">{t('update_lecture')}</h2>
         </div>
 
         {/* Instruction */}
         <div>
          
           <button className="mt-2 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-all text-sm" disabled={loading1} onClick={removeLecture}>
-            {loading1?<ClipLoader size={30} color='white'/>:"Remove Lecture"}
+            {loading1?<ClipLoader size={30} color='white'/>:t('remove_lecture')}
           </button>
         </div>
 
         {/* Input Fields */}
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t('title')}</label>
             <input
               type="text"
               className="w-full p-3 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-[black]focus:outline-none"
@@ -98,7 +101,7 @@ function EditLecture() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Video *</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t('video')} *</label>
             <input
               type="file"
               required
@@ -117,16 +120,16 @@ function EditLecture() {
               
               onChange={() => setIsPreviewFree(prev=>!prev)}
             />
-            <label htmlFor="isFree" className="text-sm text-gray-700">Is this video FREE</label>
+            <label htmlFor="isFree" className="text-sm text-gray-700">{t('is_video_free')}</label>
           </div>
         </div>
          <div>
-          {loading ?<p>Uploading video... Please wait.</p>:""}
+          {loading ?<p>{t('uploading_video')}</p>:""}
          </div>
         {/* Submit Button */}
         <div className="pt-4">
           <button className="w-full bg-black text-white py-3 rounded-md text-sm font-medium hover:bg-gray-700 transition" disabled={loading} onClick={editLecture}>
-            {loading?<ClipLoader size={30} color='white'/> :"Update Lecture"}
+            {loading?<ClipLoader size={30} color='white'/> :t('update_lecture')}
           </button>
         </div>
       </div>

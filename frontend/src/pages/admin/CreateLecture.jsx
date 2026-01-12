@@ -7,6 +7,7 @@ import { serverUrl } from '../../App';
 import { ClipLoader } from 'react-spinners';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLectureData } from '../../redux/lectureSlice';
+import { useTranslation } from 'react-i18next';
 
 function CreateLecture() {
     const navigate = useNavigate()
@@ -15,6 +16,7 @@ function CreateLecture() {
     const [loading,setLoading] = useState(false)
     const dispatch = useDispatch()
     const {lectureData} = useSelector(state=>state.lecture)
+    const { t } = useTranslation();
     
 
     const createLectureHandler = async () => {
@@ -59,14 +61,14 @@ function CreateLecture() {
       <div className="bg-white shadow-xl rounded-xl w-full max-w-2xl p-6">
         {/* Header */}
         <div className="mb-6">
-          <h1 className="text-2xl font-semibold text-gray-800 mb-1">Let’s Add a Lecture</h1>
-          <p className="text-sm text-gray-500">Enter the title and add your video lectures to enhance your course content.</p>
+          <h1 className="text-2xl font-semibold text-gray-800 mb-1">{t('add_lecture')}</h1>
+          <p className="text-sm text-gray-500">{t('add_lecture_desc')}</p>
         </div>
 
         {/* Input */}
         <input
           type="text"
-          placeholder="e.g. Introduction to Mern Stack"
+          placeholder={t('add_lecture_placeholder')}
           className="w-full border border-gray-300 rounded-md p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 mb-4"
           onChange={(e)=>setLectureTitle(e.target.value)}
           value={lectureTitle}
@@ -76,10 +78,10 @@ function CreateLecture() {
         <div className="flex gap-4 mb-6">
           <button className="flex items-center gap-2 px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300 text-sm font-medium" onClick={()=>navigate(`/addcourses/${courseId}`)
           }>
-            <FaArrowLeft /> Back to Course
+            <FaArrowLeft /> {t('back_to_course')}
           </button>
           <button className="px-5 py-2 rounded-md bg-[black] text-white hover:bg-gray-600 transition-all text-sm font-medium shadow" disabled={loading} onClick={createLectureHandler}>
-           {loading?<ClipLoader size={30} color='white'/>: "+ Create Lecture"}
+           {loading?<ClipLoader size={30} color='white'/>: t('create_lecture')}
           </button>
         </div>
 
@@ -87,7 +89,7 @@ function CreateLecture() {
          <div className="space-y-2">
           {lectureData.map((lecture, index) => (
             <div key={index} className="bg-gray-100 rounded-md flex justify-between items-center p-3 text-sm font-medium text-gray-700">
-              <span>Lecture - {index + 1}: {lecture.lectureTitle}</span>
+              <span>{t('lecture')} - {index + 1}: {lecture.lectureTitle}</span>
               <FaEdit className="text-gray-500 hover:text-gray-700 cursor-pointer"  onClick={()=>navigate(`/editlecture/${courseId}/${lecture._id}`)}/>
             </div>
           ))}

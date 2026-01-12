@@ -10,10 +10,13 @@ import { toast } from 'react-toastify';
 import { setCreatorCourseData } from '../../redux/courseSlice';
 import img1 from "../../assets/empty.jpg"
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { useTranslation } from 'react-i18next';
+
 function Courses() {
 
   let navigate = useNavigate()
   let dispatch = useDispatch()
+  const { t } = useTranslation();
 
   const { creatorCourseData } = useSelector(state => state.course)
 
@@ -45,11 +48,11 @@ function Courses() {
       <div className="w-[100%] min-h-screen p-4 sm:p-6   bg-gray-100">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-3 ">
           <div className='flex items-center justify-center gap-3'><FaArrowLeftLong className=' w-[22px] h-[22px] cursor-pointer' onClick={() => navigate("/dashboard")} />
-            <h1 className="text-xl font-semibold">Courses</h1>
+            <h1 className="text-xl font-semibold">{t('courses')}</h1>
           </div>
 
           <button className="bg-[black] text-white px-4 py-2 rounded hover:bg-gray-500" onClick={() => navigate("/createcourses")}>
-            Create Course
+            {t('create_course')}
           </button>
         </div>
 
@@ -59,10 +62,10 @@ function Courses() {
           <table className="min-w-full text-sm">
             <thead className="border-b bg-gray-50">
               <tr>
-                <th className="text-left py-3 px-4">Course</th>
-                <th className="text-left py-3 px-4">Price</th>
-                <th className="text-left py-3 px-4">Status</th>
-                <th className="text-left py-3 px-4">Action</th>
+                <th className="text-left py-3 px-4">{t('courses')}</th>
+                <th className="text-left py-3 px-4">{t('price')}</th>
+                <th className="text-left py-3 px-4">{t('status')}</th>
+                <th className="text-left py-3 px-4">{t('action')}</th>
               </tr>
             </thead>
             <tbody>
@@ -83,7 +86,7 @@ function Courses() {
                   {course?.price ? <td className="py-3 px-4">₹{course?.price}</td> : <td className="py-3 px-4">₹ NA</td>}
                   <td className="py-3 px-4">
                     <span className={`  px-3 py-1 rounded-full text-xs ${course?.isPublished ? "text-green-600 bg-green-100" : "text-red-600 bg-red-100"}`}>
-                      {course?.isPublished ? "Published" : "Draft"}
+                      {course?.isPublished ? t('published') : t('draft')}
                     </span>
                   </td>
                   <td className="py-3 px-4">
@@ -95,7 +98,7 @@ function Courses() {
             </tbody>
           </table>
           <p className="text-center text-sm text-gray-400 mt-6">
-            A list of your recent courses.
+            {t('recent_courses_list')}
           </p>
         </div>
 
@@ -123,12 +126,12 @@ function Courses() {
                 <FaEdit className="text-gray-600 hover:text-blue-600 cursor-pointer" onClick={() => navigate(`/addcourses/${course?._id}`)} />
               </div>
               <span className={` w-fit px-3 py-1 text-xs rounded-full  ${course?.isPublished ? "text-green-600 bg-green-100" : "text-red-600 bg-red-100"}`}>
-                {course?.isPublished ? "Published" : "Draft"}
+                {course?.isPublished ? t('published') : t('draft')}
               </span>
             </div>
           ))}
           <p className="text-center text-sm text-gray-400 mt-4 pl-[80px]">
-            A list of your recent courses.
+            {t('recent_courses_list')}
           </p>
 
         </div>

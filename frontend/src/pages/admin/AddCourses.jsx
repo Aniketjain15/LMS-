@@ -9,9 +9,12 @@ import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { ClipLoader } from 'react-spinners';
 import { setCourseData } from '../../redux/courseSlice';
+import { useTranslation } from 'react-i18next';
+
 function AddCourses() {
     const navigate= useNavigate()
     const {courseId} = useParams()
+    const { t } = useTranslation();
    
     
     const [selectedCourse,setSelectedCourse] = useState(null)
@@ -137,83 +140,83 @@ const editCourseHandler = async () => {
       {/* Top Bar */}
       <div className="flex items-center justify-center gap-[20px] md:justify-between flex-col md:flex-row  mb-6 relative">
         <FaArrowLeftLong  className='top-[-20%] md:top-[20%] absolute left-[0] md:left-[2%] w-[22px] h-[22px] cursor-pointer' onClick={()=>navigate("/courses")}/>
-        <h2 className="text-2xl font-semibold md:pl-[60px]">Add detail information regarding course</h2>
+        <h2 className="text-2xl font-semibold md:pl-[60px]">{t('add_course_details')}</h2>
         <div className="space-x-2 space-y-2 ">
-          <button className="bg-black text-white px-4 py-2 rounded-md" onClick={()=>navigate(`/createlecture/${selectedCourse?._id}`)}>Go to lectures page</button>
+          <button className="bg-black text-white px-4 py-2 rounded-md" onClick={()=>navigate(`/createlecture/${selectedCourse?._id}`)}>{t('go_to_lectures')}</button>
           
         </div>
       </div>
 
       {/* Form Box */}
       <div className="bg-gray-50 p-6 rounded-md">
-        <h3 className="text-lg font-medium mb-4">Basic Course Information</h3>
+        <h3 className="text-lg font-medium mb-4">{t('basic_course_info')}</h3>
         <div className="space-x-2 space-y-2 ">
-          {!isPublished? <button className="bg-green-100 text-green-600 px-4 py-2 rounded-md border-1" onClick={()=>setIsPublished(prev=>!prev)}>Click to Publish</button> 
-          :<button className="bg-red-100 text-red-600 px-4 py-2 rounded-md border-1" onClick={()=>setIsPublished(prev=>!prev)}>Click to UnPublish</button>
+          {!isPublished? <button className="bg-green-100 text-green-600 px-4 py-2 rounded-md border-1" onClick={()=>setIsPublished(prev=>!prev)}>{t('click_to_publish')}</button> 
+          :<button className="bg-red-100 text-red-600 px-4 py-2 rounded-md border-1" onClick={()=>setIsPublished(prev=>!prev)}>{t('click_to_unpublish')}</button>
           }
-          <button className="bg-red-600 text-white px-4 py-2 rounded-md" disabled={loading} onClick={removeCourse}>{loading?<ClipLoader size={30} color='white'/> :"Remove Course"}</button>
+          <button className="bg-red-600 text-white px-4 py-2 rounded-md" disabled={loading} onClick={removeCourse}>{loading?<ClipLoader size={30} color='white'/> : t('remove_course')}</button>
         </div>
 
         <form className="space-y-6" onSubmit={(e)=>e.preventDefault()}>
           {/* Title */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
-            <input type="text" placeholder="Course Title" className="w-full border px-4 py-2 rounded-md" onChange={(e)=>setTitle(e.target.value)} value={title}/>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t('title')}</label>
+            <input type="text" placeholder={t('course_title')} className="w-full border px-4 py-2 rounded-md" onChange={(e)=>setTitle(e.target.value)} value={title}/>
           </div>
 
           {/* Subtitle */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Subtitle</label>
-            <input type="text" placeholder="Subtitle" className="w-full border px-4 py-2 rounded-md" onChange={(e)=>setSubTitle(e.target.value)} value={subTitle} />
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t('subtitle')}</label>
+            <input type="text" placeholder={t('subtitle')} className="w-full border px-4 py-2 rounded-md" onChange={(e)=>setSubTitle(e.target.value)} value={subTitle} />
           </div>
 
           {/* Description */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
-            <textarea placeholder="Course description" className="w-full border px-4 py-2 rounded-md h-24 resize-none" onChange={(e)=>setDescription(e.target.value)} value={description}></textarea>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t('description')}</label>
+            <textarea placeholder={t('course_description')} className="w-full border px-4 py-2 rounded-md h-24 resize-none" onChange={(e)=>setDescription(e.target.value)} value={description}></textarea>
           </div>
 
           {/* Category, Level, Price - Flex row */}
           <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
             {/* Category */}
             <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t('category')}</label>
               <select className="w-full border px-4 py-2 rounded-md bg-white" onChange={(e)=>setCategory(e.target.value)} value={category}>
-                <option value="">Select Category</option>
-                 <option value="App Development">App Development</option>
-                             <option value="AI/ML">AI/ML</option>
-                            <option value="AI Tools">AI Tools
+                <option value="">{t('select_category')}</option>
+                 <option value="App Development">{t('app_development')}</option>
+                             <option value="AI/ML">{t('ai_ml')}</option>
+                            <option value="AI Tools">{t('ai_tools')}
                             </option>
-                             <option value="Data Science">Data Science</option>
-                            <option value="Data Analytics">Data Analytics</option>
-                            <option value="Ethical Hacking">Ethical Hacking</option>
-                            <option value="UI UX Designing">UI UX Designing</option>
-                            <option value="Web Development">Web Development</option>
-                            <option value="Others">Others</option>
+                             <option value="Data Science">{t('data_science')}</option>
+                            <option value="Data Analytics">{t('data_analytics')}</option>
+                            <option value="Ethical Hacking">{t('ethical_hacking')}</option>
+                            <option value="UI UX Designing">{t('ui_ux_designing')}</option>
+                            <option value="Web Development">{t('web_development')}</option>
+                            <option value="Others">{t('others')}</option>
               </select>
             </div>
 
             {/* Level */}
             <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Course Level</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t('course_level')}</label>
               <select className="w-full border px-4 py-2 rounded-md bg-white" onChange={(e)=>setLevel(e.target.value)} value={level} >
-                <option value="">Select Level</option>
-                <option value="Beginner">Beginner</option>
-                <option value="Intermediate">Intermediate</option>
-                <option value="Advanced">Advanced</option>
+                <option value="">{t('select_level')}</option>
+                <option value="Beginner">{t('beginner')}</option>
+                <option value="Intermediate">{t('intermediate')}</option>
+                <option value="Advanced">{t('advanced')}</option>
               </select>
             </div>
 
             {/* Price */}
             <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Price (INR)</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t('price_inr')}</label>
               <input type="number" placeholder="₹" className="w-full border px-4 py-2 rounded-md" onChange={(e)=>setPrice(e.target.value)} value={price} />
             </div>
           </div>
 
           {/* Thumbnail */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Course Thumbnail</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t('course_thumbnail')}</label>
             <input type="file" ref={thumb} hidden className="w-full border px-4 py-2 rounded-md" onChange={handleThumbnail} accept='image/*' />
           </div>
 
@@ -223,8 +226,8 @@ const editCourseHandler = async () => {
           <MdEdit className='w-[20px] h-[20px] absolute top-2 right-2  ' onClick={()=>thumb.current.click()}/> </div>
 
           <div className='flex items-center justify-start gap-[15px]'>
-            <button className='bg-[#e9e8e8] hover:bg-red-200 text-black border-1 border-black cursor-pointer px-4 py-2 rounded-md' onClick={()=>navigate("/courses")}>Cancel</button>
-            <button className='bg-black text-white px-7 py-2 rounded-md hover:bg-gray-500 cursor-pointer' disabled={loading} onClick={editCourseHandler}>{loading ? <ClipLoader size={30} color='white'/>:"Save"}</button>
+            <button className='bg-[#e9e8e8] hover:bg-red-200 text-black border-1 border-black cursor-pointer px-4 py-2 rounded-md' onClick={()=>navigate("/courses")}>{t('cancel')}</button>
+            <button className='bg-black text-white px-7 py-2 rounded-md hover:bg-gray-500 cursor-pointer' disabled={loading} onClick={editCourseHandler}>{loading ? <ClipLoader size={30} color='white'/>:t('save')}</button>
             
           </div>
         </form>

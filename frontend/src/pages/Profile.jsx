@@ -2,10 +2,12 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { useTranslation } from 'react-i18next';
 
 function Profile() {
   let {userData} = useSelector(state=>state.user)
   let navigate = useNavigate()
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-gray-100 px-4 py-10 flex items-center justify-center ">
       
@@ -21,25 +23,25 @@ function Profile() {
          {userData?.name.slice(0,1).toUpperCase()}
           </div>}
           <h2 className="text-2xl font-bold mt-4 text-gray-800">{userData.name}</h2>
-          <p className="text-sm text-gray-500">{userData.role}</p>
+          <p className="text-sm text-gray-500">{t(userData.role)}</p>
         </div>
 
         {/* Profile Info */}
         <div className="mt-6 space-y-4">
           <div className="text-sm">
-            <span className="font-semibold text-gray-700">Email: </span>
+            <span className="font-semibold text-gray-700">{t('email')}: </span>
             <span>{userData.email}</span>
           </div>
 
           <div className="text-sm">
-            <span className="font-semibold text-gray-700">Bio: </span>
+            <span className="font-semibold text-gray-700">{t('bio')}: </span>
             <span>{userData.description}</span>
           </div>
 
           
 
           <div className="text-sm">
-            <span className="font-semibold text-gray-700">Enrolled Courses: </span>
+            <span className="font-semibold text-gray-700">{t('enrolled_courses')}: </span>
             <span>{userData.enrolledCourses.length}</span>
           </div>
         </div>
@@ -47,7 +49,7 @@ function Profile() {
         {/* Actions */}
         <div className="mt-6 flex justify-center gap-4">
           <button className="px-5 py-2 rounded bg-[black] text-white active:bg-[#4b4b4b] cursor-pointer transition" onClick={()=>navigate("/editprofile")}>
-            Edit Profile
+            {t('edit_profile')}
           </button>
           
         </div>

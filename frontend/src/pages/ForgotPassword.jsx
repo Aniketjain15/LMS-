@@ -4,9 +4,11 @@ import { useNavigate } from 'react-router-dom'
 import { ClipLoader } from 'react-spinners'
 import { serverUrl } from '../App'
 import { toast } from 'react-toastify'
+import { useTranslation } from 'react-i18next'
 
 function ForgotPassword() {
     let navigate = useNavigate()
+    const { t } = useTranslation()
     const [step,setStep] = useState(1)
     const [email,setEmail] = useState("")
     const [otp,setOtp] = useState("")
@@ -50,7 +52,7 @@ function ForgotPassword() {
     setLoading(true)
     try {
       if(newpassword !== conPassword){
-        return toast.error("password does not match")
+        return toast.error(t("password_mismatch"))
       }
       const result = await axios.post(`${serverUrl}/api/auth/resetpassword` , {email,password:newpassword} , {withCredentials:true})
       console.log(result)
@@ -70,18 +72,18 @@ function ForgotPassword() {
      <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
      { step==1 && <div className="bg-white shadow-md rounded-xl p-8 max-w-md w-full">
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
-          Forgot Your Password?
+          {t('forgot_password')}
         </h2>
 
           <form  className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Enter your email address
+                {t('enter_email')}
               </label>
               <input
                 type="email"
                 className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[black]"
-                placeholder="you@example.com"
+                placeholder={t('your_email')}
                 onChange={(e)=>setEmail(e.target.value)}
 
                 value={email}
@@ -93,14 +95,14 @@ function ForgotPassword() {
               type="submit"
               className="w-full bg-[black] hover:bg-[#4b4b4b] text-white py-2 px-4 rounded-md font-medium cursor-pointer" disabled={loading} onClick={handleStep1}
             >
-              {loading?<ClipLoader size={30} color='white'/>:"Send OTP"}
+              {loading?<ClipLoader size={30} color='white'/>:t('send_otp')}
             </button>
           </form>
         
 
         <div className="text-sm text-center mt-4" onClick={()=>navigate("/login")} >
         
-            Back to Login
+            {t('back_to_login')}
         
         </div>
       </div>}
@@ -108,7 +110,7 @@ function ForgotPassword() {
 
       {step==2 && <div className="bg-white shadow-lg rounded-xl p-8 max-w-md w-full">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-2">
-          Enter OTP
+          {t('enter_otp')}
         </h2>
       
 
@@ -117,12 +119,12 @@ function ForgotPassword() {
           <form  className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Please enter the 4-digit code sent to your email.
+                {t('enter_otp_desc')}
               </label>
               <input
                 type="text"
                 className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[black]"
-                placeholder="Enter Here"
+                placeholder={t('enter_here')}
                 onChange={(e)=>setOtp(e.target.value)}
 
                 value={otp}
@@ -134,14 +136,14 @@ function ForgotPassword() {
               type="submit"
               className="w-full bg-[black] hover:bg-[#4b4b4b] text-white py-2 px-4 rounded-md font-medium cursor-pointer" disabled={loading} onClick={handleStep2} 
             >
-              {loading?<ClipLoader size={30} color='white'/>:"Verify OTP"}
+              {loading?<ClipLoader size={30} color='white'/>:t('verify_otp')}
             </button>
           </form>
         
 
         <div className="text-sm text-center mt-4" onClick={()=>navigate("/login")} >
         
-            Back to Login
+            {t('back_to_login')}
         
         </div>
        
@@ -151,21 +153,21 @@ function ForgotPassword() {
       </div>}
       {step==3 &&   <div className="bg-white shadow-lg rounded-xl p-8 max-w-md w-full">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-2">
-          Reset Your Password
+          {t('reset_password')}
         </h2>
         <p className="text-sm text-gray-500 text-center mb-6">
-          Enter a new password below to regain access to your account.
+          {t('reset_password_desc')}
         </p>
 
         <form className="space-y-5" onSubmit={(e)=>e.preventDefault()}>
           {/* New Password */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1" >
-              New Password
+              {t('new_password')}
             </label>
             <input
               type="text"
-              placeholder="Enter new password"
+              placeholder={t('enter_new_password')}
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[black] focus:outline-none" onChange={(e)=>setNewPassword(e.target.value)}
 
                 value={newpassword}
@@ -175,11 +177,11 @@ function ForgotPassword() {
           {/* Confirm Password */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Confirm Password
+              {t('confirm_password')}
             </label>
             <input
               type="text"
-              placeholder="Re-enter new password"
+              placeholder={t('reenter_new_password')}
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[black] focus:outline-none" onChange={(e)=>setConpassword(e.target.value)}
 
                 value={conPassword}
@@ -191,14 +193,14 @@ function ForgotPassword() {
             type="submit"
             className="w-full bg-[black] hover:bg-[#4b4b4b] text-white py-2 rounded-md font-medium" onClick={handleStep3}
           >
-            {loading?<ClipLoader size={30} color='white'/>:"Reset Password"}
+            {loading?<ClipLoader size={30} color='white'/>:t('reset_password')}
           </button>
         </form>
 
         {/* Back to login */}
         <div className="text-center text-sm mt-4" onClick={()=>navigate("/login")}>
           
-            Back to Login
+            {t('back_to_login')}
           
         </div>
       </div>}

@@ -10,6 +10,7 @@ import { setSelectedCourseData } from '../redux/courseSlice';
 import { FaLock, FaPlayCircle } from "react-icons/fa";
 import { toast } from 'react-toastify';
 import { FaStar } from "react-icons/fa6";
+import { useTranslation } from 'react-i18next';
 
 
 function ViewCourse() {
@@ -27,6 +28,7 @@ function ViewCourse() {
    const [isEnrolled, setIsEnrolled] = useState(false);
    const [rating, setRating] = useState(0);
    const [comment, setComment] = useState("");
+   const { t } = useTranslation();
    
    
   
@@ -216,7 +218,7 @@ const handleEnroll = async (courseId, userId) => {
             {/* Rating & Price */}
             <div className="flex items-start flex-col justify-between">
               <div className="text-yellow-500 font-medium">
-                ⭐ {avgRating} <span className="text-gray-500">(1,200 reviews)</span>
+                ⭐ {avgRating} <span className="text-gray-500">(1,200 {t('reviews')})</span>
               </div>
               <div>
                 <span className="text-lg font-semibold text-black">{selectedCourseData?.price}</span>{" "}
@@ -233,10 +235,10 @@ const handleEnroll = async (courseId, userId) => {
 
             {/* Enroll Button */}
             {!isEnrolled ?<button className="bg-[black] text-white px-6 py-2 rounded hover:bg-gray-700 mt-3" onClick={()=>handleEnroll(courseId , userData._id)}>
-              Enroll Now
+              {t('enroll_now')}
             </button> :
             <button className="bg-green-200 text-green-600 px-6 py-2 rounded hover:bg-gray-100 hover:border mt-3" onClick={()=>navigate(`/viewlecture/${courseId}`)}>
-             Watch Now
+             {t('watch_now')}
             </button>
             }
           </div>
@@ -244,24 +246,24 @@ const handleEnroll = async (courseId, userId) => {
 
         {/* What You'll Learn */}
         <div>
-          <h2 className="text-xl font-semibold mb-2">What You’ll Learn</h2>
+          <h2 className="text-xl font-semibold mb-2">{t('what_you_will_learn')}</h2>
           <ul className="list-disc pl-6 text-gray-700 space-y-1">
-            <li>Learn {selectedCourseData?.category} from Beginning</li>
+            <li>{t('learn_from_beginning', { category: selectedCourseData?.category })}</li>
             
           </ul>
         </div>
 
         {/* Requirements */}
         <div>
-          <h2 className="text-xl font-semibold mb-2">Requirements</h2>
-          <p className="text-gray-700">Basic programming knowledge is helpful but not required.</p>
+          <h2 className="text-xl font-semibold mb-2">{t('requirements')}</h2>
+          <p className="text-gray-700">{t('requirements_desc')}</p>
         </div>
 
         {/* Who This Course Is For */}
         <div>
-          <h2 className="text-xl font-semibold mb-2">Who This Course is For</h2>
+          <h2 className="text-xl font-semibold mb-2">{t('who_this_course_is_for')}</h2>
           <p className="text-gray-700">
-            Beginners, aspiring developers, and professionals looking to upgrade skills.
+            {t('who_this_course_is_for_desc')}
           </p>
         </div>
 
@@ -269,8 +271,8 @@ const handleEnroll = async (courseId, userId) => {
          <div className="flex flex-col md:flex-row gap-6">
   {/* Left Side - Curriculum */}
   <div className="bg-white w-full md:w-2/5 p-6 rounded-2xl shadow-lg border border-gray-200">
-    <h2 className="text-xl font-bold mb-1 text-gray-800">Course Curriculum</h2>
-    <p className="text-sm text-gray-500 mb-4">{selectedCourseData?.lectures?.length} Lectures</p>
+    <h2 className="text-xl font-bold mb-1 text-gray-800">{t('course_curriculum')}</h2>
+    <p className="text-sm text-gray-500 mb-4">{selectedCourseData?.lectures?.length} {t('lectures')}</p>
 
     <div className="flex flex-col gap-3">
       {selectedCourseData?.lectures?.map((lecture, index) => (
@@ -313,12 +315,12 @@ const handleEnroll = async (courseId, userId) => {
           className="w-full h-full object-cover"
         />
       ) : (
-        <span className="text-white text-sm">Select a preview lecture to watch</span>
+        <span className="text-white text-sm">{t('select_preview_lecture')}</span>
       )}
     </div>
 
     <h3 className="text-lg font-semibold text-gray-900 mb-1">
-      {selectedLecture?.lectureTitle || "Lecture Title"}
+      {selectedLecture?.lectureTitle || t('lecture_title')}
     </h3>
     <p className="text-gray-600 text-sm">
       {selectedCourseData?.title}
@@ -326,7 +328,7 @@ const handleEnroll = async (courseId, userId) => {
   </div>
 </div>
 <div className="mt-8 border-t pt-6">
-    <h2 className="text-xl font-semibold mb-2">Write a Review</h2>
+    <h2 className="text-xl font-semibold mb-2">{t('write_a_review')}</h2>
     <div className="mb-4">
       <div className="flex gap-1 mb-2">
         {[1, 2, 3, 4, 5].map((star) => (
@@ -339,7 +341,7 @@ const handleEnroll = async (courseId, userId) => {
       <textarea
         value={comment}
         onChange={(e) => setComment(e.target.value)}
-        placeholder="Write your comment here..."
+        placeholder={t('write_your_comment_here')}
         className="w-full border border-gray-300 rounded-lg p-2"
         rows="3"
       />
@@ -347,7 +349,7 @@ const handleEnroll = async (courseId, userId) => {
         
         className="bg-black text-white mt-3 px-4 py-2 rounded hover:bg-gray-800" onClick={handleReview}
       >
-        Submit Review
+        {t('submit_review')}
       </button>
     </div>
 
@@ -371,7 +373,7 @@ const handleEnroll = async (courseId, userId) => {
           </div>
         </div>
         <div>
-          <p className='text-xl font-semibold mb-2'>Other Published Courses by the Educator -</p>
+          <p className='text-xl font-semibold mb-2'>{t('other_published_courses')}</p>
         <div className='w-full transition-all duration-300 py-[20px]   flex items-start justify-center lg:justify-start flex-wrap gap-6 lg:px-[80px] '>
           
             {

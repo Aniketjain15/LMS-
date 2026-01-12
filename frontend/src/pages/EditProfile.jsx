@@ -7,9 +7,11 @@ import { toast } from 'react-toastify'
 import { ClipLoader } from 'react-spinners'
 import { useNavigate } from 'react-router-dom'
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { useTranslation } from 'react-i18next'
 
 function EditProfile() {
      let {userData} = useSelector(state=>state.user)
+     const { t } = useTranslation();
      let [name,setName] = useState(userData.name || "")
      let [description,setDescription] = useState(userData.description || "")
      let [photoUrl,setPhotoUrl] = useState(null)
@@ -48,7 +50,7 @@ function EditProfile() {
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 py-10">
       <div className="bg-white rounded-2xl shadow-lg p-8 max-w-xl w-full relative">
         <FaArrowLeftLong  className='absolute top-[5%] left-[5%] w-[22px] h-[22px] cursor-pointer' onClick={()=>navigate("/profile")}/>
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Edit Profile</h2>
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">{t('edit_profile')}</h2>
 
         <form  className="space-y-5" onSubmit={(e)=>e.preventDefault()}>
           {/* Profile Photo */}
@@ -63,7 +65,7 @@ function EditProfile() {
           </div>}
           </div>
           <div>
-            <label className="text-sm font-medium text-gray-700">Select Avatar</label>
+            <label className="text-sm font-medium text-gray-700">{t('select_avatar')}</label>
             <input
               type="file"
               name="photoUrl"
@@ -76,7 +78,7 @@ function EditProfile() {
 
           {/* Name */}
           <div>
-            <label className="text-sm font-medium text-gray-700">Full Name</label>
+            <label className="text-sm font-medium text-gray-700">{t('full_name')}</label>
             <input
               type="text"
               name="name"
@@ -90,7 +92,7 @@ function EditProfile() {
 
           {/* Email (read-only) */}
           <div>
-            <label className="text-sm font-medium text-gray-700">Email</label>
+            <label className="text-sm font-medium text-gray-700">{t('email')}</label>
             <input
               type="email"
               
@@ -104,13 +106,13 @@ function EditProfile() {
 
           {/* Description */}
           <div>
-            <label className="text-sm font-medium text-gray-700">Description</label>
+            <label className="text-sm font-medium text-gray-700">{t('description')}</label>
             <textarea
               name="description"
              
               className="w-full mt-1 px-4 py-2 border border-gray-300 rounded-md resize-none focus:ring-2 focus:ring-[black]"
               rows={3}
-              placeholder="Tell us about yourself"
+              placeholder={t('tell_us_about_yourself')}
               onChange={(e)=>setDescription(e.target.value)}
               value={description}
             />
@@ -121,7 +123,7 @@ function EditProfile() {
             type="submit"
             className="w-full bg-[black] active:bg-[#454545] text-white py-2 rounded-md font-medium transition cursor-pointer" disabled={loading} onClick={updateProfile}
           >
-            {loading ? <ClipLoader size={30} color='white'/> : "Save Changes"}
+            {loading ? <ClipLoader size={30} color='white'/> : t('save_changes')}
           </button>
         </form>
       </div>
